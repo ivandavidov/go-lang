@@ -66,8 +66,11 @@ func encrypt(normalFileName string) {
       encryptedSlice[i] = normalByte ^ padSlice[i]
     }
     
-    padFile.Write(padSlice)
-    encryptedFile.Write(encryptedSlice)
+    _, err = padFile.Write(padSlice)
+    check(err)
+    
+    _, err = encryptedFile.Write(encryptedSlice)
+    check(err)
     
     numBytes, err = normalFile.Read(normalBuf);
   }
@@ -138,7 +141,8 @@ func decrypt(encryptedFileName string, padFileName string) {
       normalSlice[i] = encryptedByte ^ padSlice[i]
     }
     
-    normalFile.Write(normalSlice)
+    _, err = normalFile.Write(normalSlice)
+    check(err)
     
     numBytes, err = encryptedFile.Read(encryptedBuf);
   }
